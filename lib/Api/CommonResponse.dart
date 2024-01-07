@@ -1,8 +1,8 @@
 class CommonResponse {
-  late String message;
-  late int status;
-  late bool success;
-  late List<dynamic> data;
+  String? message;
+  int? status;
+  bool? success;
+  String? data;
 
   CommonResponse({required this.message, required this.status, required this.success, required this.data});
 
