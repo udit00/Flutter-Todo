@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_flutter_app/Common/Toast.dart';
+import 'package:todo_flutter_app/Services/Toast/ToastService.dart';
 import 'package:todo_flutter_app/Ui/CommonUi/AppInputs.dart';
-import 'package:todo_flutter_app/Ui/CommonUi/ScreenDimension.dart';
 import 'package:todo_flutter_app/Ui/Pages/Login/LoginViewModel.dart';
 import 'package:todo_flutter_app/Utils/Colors.dart';
 
@@ -36,13 +35,13 @@ class _LoginWithPasswordPageStateState extends State<LoginWithPasswordPageState>
 
   void setObservers() {
     viewModel.errorStream.stream.listen((errMsg) { 
-      errorToast(errMsg);
+      ToastService.errorToast(errMsg);
     });
     viewModel.loadingStream.stream.listen((loading) {
 
     });
     viewModel.loginDataStream.stream.listen((loginData) { 
-      successToast(loginData.message.toString());
+      ToastService.successToast(loginData.message.toString());
       print(loginData);
     });
   }
