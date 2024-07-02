@@ -61,6 +61,7 @@ class __SplashScreenPagStateState extends State<_SplashScreenPagState> {
     } else {
       _goToLoginPage();
     }
+    // _goToBottomNavigation();
   }
 
   void _goToLoginPage() {
