@@ -1,31 +1,20 @@
-import 'dart:convert';
+import 'package:todo_flutter_app/Api/CommonResponse.dart';
+import 'package:todo_flutter_app/Api/DioService.dart';
 
-import 'package:http/http.dart' as http;
+abstract class Api {
+  static const String _appName = "todo";
+  // static const String _appName = "todo";
+  static const String baseUrl = "http://157.173.218.215:5000/$_appName/";
+  Future<CommonResponse> get(Map<String, dynamic> params, String apiName);
+  Future<CommonResponse> post(Map<String, dynamic> params, String apiName);
+}
 
-class Api {
-  String appName = "todo";
-  String baseUrl = "";
-  Api() {
-    // baseUrl =  "https://udit.apipadhai.com/$appName/";
-    baseUrl =  "http://localhost:5000/$appName/";
-  }
-  Future<http.Response> apiGet(String apiName, Map<String, String> params) {
-    String url = "$baseUrl$apiName?";
-    params.forEach((key, value) { 
-      url += "$key=$value&";
-    });
-    String finalUrl = url.substring(0, url.lastIndexOf("&"));
-    return http.get(Uri.parse(finalUrl));
-  }
+class ApiService extends DioServiceImpl{  
+  ApiService._privateConstructor();
 
-  Future<http.Response> apiPost(String apiName, Map<String, String> params) {
-    String url = "$baseUrl$apiName";
-    return http.post(
-      Uri.parse(url),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(params),
-    );
+  static final ApiService _instance = ApiService._privateConstructor();
+
+  factory ApiService() {
+    return _instance;
   }
 }

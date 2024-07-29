@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_flutter_app/Common/ENV.dart';
 import 'package:todo_flutter_app/Services/Login/LoginService.dart';
 import 'package:todo_flutter_app/Services/Storage/StorageService.dart';
 import 'package:todo_flutter_app/Ui/CommonUi/ScreenDimension.dart';
 import 'package:todo_flutter_app/Ui/Pages/BottomNavigation/MyBottomNavigation.dart';
+import 'package:todo_flutter_app/Ui/Pages/Login/LoginViewModel.dart';
 import 'package:todo_flutter_app/Utils/Colors.dart';
 import 'package:todo_flutter_app/Ui/Pages/Login/Login.dart';
 
@@ -17,14 +19,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => LoginViewModel(),
+        ),
+
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: const _SplashScreenPagState(),
       ),
-      home: const _SplashScreenPagState(),
     );
   }
 }

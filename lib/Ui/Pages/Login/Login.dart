@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_flutter_app/Services/Toast/ToastService.dart';
 import 'package:todo_flutter_app/Ui/CommonUi/AppInputs.dart';
 import 'package:todo_flutter_app/Ui/Pages/Login/LoginViewModel.dart';
@@ -46,104 +47,101 @@ class _LoginWithPasswordPageStateState extends State<LoginWithPasswordPageState>
     });
   }
 
-  void userLogin() {
-    Map<String, String> params = {
-      "prm_mobileno": "7011490531",
-      "prm_password": "Udit@123*"
-    };
-    viewModel.userLogin(params);
-  }
-
+ 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'TO-DO',                  
-              style: TextStyle(
-                color: CommonColors.colorPrimary,          
-                fontSize: 54
-              )
-            ),
-            Icon(Icons.checklist,color: CommonColors.colorPrimary, size: 100,),
-            // Image.asset(
-            //   'assets/images/logo.png',
-            //   height: 200,
-            //   scale: 2.5,
-            // ),
-            Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: AppInputs(
-                    labelText: "Enter Mobile Number",
-                    textInputType: TextInputType.number,
-                    textController: mobileController,
-                    focusNode: emailFocusNode)),
-            Padding(
-                padding: const EdgeInsets.only(
-                  left: 16.0,
-                  right: 16.0,
-                ),
-                child: ValueListenableBuilder(
-                  valueListenable: obsecurePassword,
-                  builder: (context, value, child) {
-                    return TextFormField(
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      controller: passwordController,
-                      obscureText: obsecurePassword.value,
-                      obscuringCharacter: "*",
-                      focusNode: passwordFocusNode,
-                      decoration: InputDecoration(
-                        labelStyle:
-                            TextStyle(color: CommonColors.colorBlack),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: CommonColors.colorBlack, width: 1.0),
+    return Consumer(
+      builder: (context, loginViewModel, child) {
+        return Scaffold(
+          body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'TO-DO',                  
+                style: TextStyle(
+                  color: CommonColors.colorPrimary,          
+                  fontSize: 54
+                )
+              ),
+              Icon(Icons.checklist,color: CommonColors.colorPrimary, size: 100,),
+              // Image.asset(
+              //   'assets/images/logo.png',
+              //   height: 200,
+              //   scale: 2.5,
+              // ),
+              Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: AppInputs(
+                      labelText: "Enter Mobile Number",
+                      textInputType: TextInputType.number,
+                      textController: mobileController,
+                      focusNode: emailFocusNode)),
+              Padding(
+                  padding: const EdgeInsets.only(
+                    left: 16.0,
+                    right: 16.0,
+                  ),
+                  child: ValueListenableBuilder(
+                    valueListenable: obsecurePassword,
+                    builder: (context, value, child) {
+                      return TextFormField(
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        controller: passwordController,
+                        obscureText: obsecurePassword.value,
+                        obscuringCharacter: "*",
+                        focusNode: passwordFocusNode,
+                        decoration: InputDecoration(
+                          labelStyle:
+                              TextStyle(color: CommonColors.colorBlack),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: CommonColors.colorBlack, width: 1.0),
+                          ),
+                          border: const OutlineInputBorder(),
+                          labelText: "Enter your password",
+                          suffixIcon: InkWell(
+                              onTap: () {
+                                obsecurePassword.value = !obsecurePassword.value;
+                              },
+                              child: obsecurePassword.value
+                                  ? Icon(Icons.visibility_off,
+                                      color: CommonColors.colorBlack)
+                                  : Icon(Icons.visibility_outlined,
+                                      color: CommonColors.colorBlack)),
                         ),
-                        border: const OutlineInputBorder(),
-                        labelText: "Enter your password",
-                        suffixIcon: InkWell(
-                            onTap: () {
-                              obsecurePassword.value = !obsecurePassword.value;
-                            },
-                            child: obsecurePassword.value
-                                ? Icon(Icons.visibility_off,
-                                    color: CommonColors.colorBlack)
-                                : Icon(Icons.visibility_outlined,
-                                    color: CommonColors.colorBlack)),
-                      ),
-                    );
+                      );
+                    },
+                  )),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, top: 16.0),
+                child: GestureDetector(
+                  onTap: () {
+                    // Navigator.pushNamed(context, RoutesName.forgot_password);
                   },
-                )),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, top: 16.0),
-              child: GestureDetector(
-                onTap: () {
-                  // Navigator.pushNamed(context, RoutesName.forgot_password);
-                },
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text("Forgot Password",
-                        style: Theme.of(context).textTheme.bodyMedium)),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Forgot Password",
+                          style: Theme.of(context).textTheme.bodyMedium)),
+                ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.all(40),
-              child: ElevatedButton(                
-                style: ButtonStyle(
-                  padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 10, horizontal: 0)),
-                  backgroundColor: MaterialStatePropertyAll(CommonColors.colorPrimary),
-                ),                
-                onPressed: userLogin,
-                child: Text('Login', style: TextStyle(color: CommonColors.colorWhite),)
-              ),
-            )
-          ],
+              Container(
+                margin: EdgeInsets.all(40),
+                child: ElevatedButton(                
+                  style: ButtonStyle(
+                    padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 10, horizontal: 0)),
+                    backgroundColor: MaterialStatePropertyAll(CommonColors.colorPrimary),
+                  ),                
+                  onPressed: () => viewModel.userLogin(mobileController.text, passwordController.text),
+                  child: Text('Login', style: TextStyle(color: CommonColors.colorWhite),)
+                ),
+              )
+            ],
+          ),
         ),
-      ),
-    ));
+      ));
+      },
+    );
   }
 }

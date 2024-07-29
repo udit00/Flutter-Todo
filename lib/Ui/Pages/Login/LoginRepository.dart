@@ -1,14 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:todo_flutter_app/Api/ApiService.dart';
+import 'package:todo_flutter_app/Api/Api.dart';
 import 'package:todo_flutter_app/Api/CommonResponse.dart';
 import 'package:todo_flutter_app/Ui/Base/BaseRepository.dart';
-import 'package:todo_flutter_app/Ui/Pages/Login/LoginModels/LoginUserModel.dart';
 
 class LoginRepository extends BaseRepository{
-
-  StreamController<LoginUserModel> loginDataStream = StreamController();
-
   // Future<void> userLogin(Map<String, String> params) async {
   //   try {
   //     var rawResponse = await ApiService.getInstance().apiPost("userLogin", params);
@@ -38,30 +33,7 @@ class LoginRepository extends BaseRepository{
   //   }
   // }
 
-  void userLogin(Map<String, String> params) async {
-
-    try {
-      var rawResponse = await ApiService.getInstance().apiPost("userLogin", params);
-      if(rawResponse.statusCode == 200) {
-        dynamic json = jsonDecode(rawResponse.body);
-        CommonResponse commonResponse = CommonResponse.fromJson(json);
-        if(commonResponse.status == 1) {
-          Map<String, dynamic> table = jsonDecode(commonResponse.data.toString());
-          List<dynamic> list = table.values.first;
-          List<LoginUserModel> resultList = List.generate(
-              list.length, (index) => LoginUserModel.fromJson(list[index])
-              );
-          if(resultList.isNotEmpty) {
-            loginDataStream.add(resultList.first);
-          }
-        } else {
-          errorStream.add(commonResponse.message.toString());
-        }
-      } else {
-        errorStream.add(ApiService.commonError);
-      }
-    } catch(ex) {
-      errorStream.add(ex.toString());
-    }   
+  Future<CommonResponse> userLogin(Map<String, String> params) async {  
+    return await ApiService().post(params, "userLogin");
   }
 }
