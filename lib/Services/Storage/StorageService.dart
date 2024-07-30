@@ -15,54 +15,42 @@ class StorageService {
     // SharedPreferences.getInstance().then((prefInstance) => {
     //   prefs = prefInstance,
     // });
-    getInstance(); 
+    getInstance();
     isLoggedInPref = "${basePref}_LOGIN";
     loginDataPref = "${basePref}_LOGINDATA";
   }
 
   Future<bool> saveStringToStorage(String key, String value) async {
-    if(key.isEmpty) return false;
+    if (prefs == null) return false;
+    if (key.isEmpty) return false;
     bool isSaved = false;
-    if(prefs != null) {
-      isSaved = await prefs?.setString(key, value) ?? false;
-    } else {
-      isSaved = false;
-    }
+    isSaved = await prefs!.setString(key, value);
     return isSaved;
   }
 
   String? getStringFromStorage(String key) {
+    if (prefs == null) return null;
     // final prefs = await SharedPreferences.getInstance();
-    String? output;
-    if(prefs != null) {
-      output = prefs?.getString(key);
-    }     
+    String? output = prefs!.getString(key);
     return output;
   }
 
   Future<bool> removeFromStorage(String key) async {
+    if (prefs == null) return false;
     // final prefs = await SharedPreferences.getInstance();
-    bool output = false;
-    if(prefs != null) {
-      output = await prefs?.remove(key) ?? false; 
-    }
+    bool output = await prefs!.remove(key);
     return output;
   }
 
   Future<bool> saveBoolToStorage(String key, bool value) async {
-    if(key.isEmpty) return false;
-    bool output = false;
-    if(prefs != null) {
-      output = await prefs?.setBool(key, value) ?? false;
-    }
+    if (prefs == null) return false;
+    if (key.isEmpty) return false;
+    bool output = await prefs!.setBool(key, value);
     return output;
   }
 
   bool getBoolFromStorage(String key) {
-    bool answer = false;
-    if(prefs != null) {
-      answer = prefs?.getBool(key) ?? false;
-    }
-    return answer;
-  } 
+    if (prefs == null) return false;
+    return prefs!.getBool(key) ?? false;
+  }
 }
