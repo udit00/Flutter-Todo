@@ -2,7 +2,8 @@ class CommonResponse {
   String? message;
   int? status;
   bool? success;
-  String? data;
+  // String? data;
+  List<dynamic>? data;
 
   CommonResponse({required this.message, required this.status, required this.success, required this.data});
 

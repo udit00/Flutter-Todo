@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_flutter_app/Common/ENV.dart';
+import 'package:todo_flutter_app/Ui/Pages/Login/LoginModels/LoginUserModel.dart';
 
 class StorageService {
   SharedPreferences? prefs;
@@ -18,6 +21,15 @@ class StorageService {
     getInstance(); 
     isLoggedInPref = "${basePref}_LOGIN";
     loginDataPref = "${basePref}_LOGINDATA";
+  }
+
+  Future<LoginUserModel?> getLoginData() async {
+    String? loginDataStr = getStringFromStorage(loginDataPref);
+    if(loginDataStr != null) {
+      LoginUserModel loginUserModel = LoginUserModel.fromJson(jsonDecode(loginDataStr));
+      return loginUserModel;
+    } 
+    return null;
   }
 
   Future<bool> saveStringToStorage(String key, String value) async {

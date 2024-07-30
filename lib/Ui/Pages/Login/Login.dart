@@ -24,13 +24,16 @@ class _LoginWithPasswordPageStateState extends State<LoginWithPasswordPageState>
 
   FocusNode passwordFocusNode = FocusNode();
   LoginViewModel viewModel = LoginViewModel();
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // ScreenDimension.setDimensions(context);
     setObservers();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      mobileController.text = "7011490531";
+      passwordController.text = "Udit@123";
+    });
   }
 
 
@@ -43,6 +46,9 @@ class _LoginWithPasswordPageStateState extends State<LoginWithPasswordPageState>
     });
     viewModel.loginDataStream.stream.listen((loginData) { 
       ToastService.successToast(loginData.message.toString());
+      // storageService.getLoginData().then((loginUserModel) => {
+      //   debugPrint(loginUserModel?.pass?.toString())
+      // });
       print(loginData);
     });
   }
