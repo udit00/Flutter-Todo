@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_flutter_app/Common/ENV.dart';
-import 'package:todo_flutter_app/Services/Login/LoginService.dart';
 import 'package:todo_flutter_app/Services/Storage/StorageService.dart';
 import 'package:todo_flutter_app/Ui/CommonUi/ScreenDimension.dart';
 import 'package:todo_flutter_app/Ui/Pages/BottomNavigation/MyBottomNavigation.dart';
@@ -49,11 +48,11 @@ class _SplashScreenPagState extends StatefulWidget {
 
 class __SplashScreenPagStateState extends State<_SplashScreenPagState> {
   final StorageService _storageService = StorageService(); 
-  late LoginService _loginService;
+  // late LoginService _loginService;
 
   void init(final VoidCallback functionToCallAfterInit) {
     ScreenDimension.setDimensions(context);
-    _loginService = LoginService(context);
+    // _loginService = LoginService(context);
     functionToCallAfterInit.call();
   }
 
@@ -66,18 +65,25 @@ class __SplashScreenPagStateState extends State<_SplashScreenPagState> {
   }
 
   void checkIfAlreadyLogginInBefore() {
-    if(_loginService.ifAlreadyLogginInBefore()) {
-      _goToBottomNavigation();
-    } else {
-      _goToLoginPage();
-    }
+    _storageService.getLoginData().then((loginModel) => {
+      if(loginModel == null) {
+        _goToBottomNavigation()
+      } else {
+        _goToLoginPage()
+      }
+    });
+    // if(_storageService) {
+    //   _goToBottomNavigation();
+    // } else {
+    //   _goToLoginPage();
+    // }
     // _goToBottomNavigation();
   }
 
   void _goToLoginPage() {
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (context) => const LoginWithPasswordPageState()), (fooBar) => false);
+      MaterialPageRoute(builder: (context) => const LoginScreen()), (fooBar) => false);
   }
 
   void _goToBottomNavigation() {

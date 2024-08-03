@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_flutter_app/Services/Toast/ToastService.dart';
 import 'package:todo_flutter_app/Ui/CommonUi/AppInputs.dart';
+import 'package:todo_flutter_app/Ui/Pages/BottomNavigation/MyBottomNavigation.dart';
 import 'package:todo_flutter_app/Ui/Pages/Login/LoginViewModel.dart';
 import 'package:todo_flutter_app/Utils/Colors.dart';
 
-class LoginWithPasswordPageState extends StatefulWidget {
-  const LoginWithPasswordPageState({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<LoginWithPasswordPageState> createState() => _LoginWithPasswordPageStateState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginWithPasswordPageStateState extends State<LoginWithPasswordPageState> {
+class _LoginScreenState extends State<LoginScreen> {
 
 
   ValueNotifier obsecurePassword = ValueNotifier(true);
@@ -24,6 +25,7 @@ class _LoginWithPasswordPageStateState extends State<LoginWithPasswordPageState>
 
   FocusNode passwordFocusNode = FocusNode();
   LoginViewModel viewModel = LoginViewModel();
+  
   @override
   void initState() {
     super.initState();
@@ -50,7 +52,15 @@ class _LoginWithPasswordPageStateState extends State<LoginWithPasswordPageState>
       //   debugPrint(loginUserModel?.pass?.toString())
       // });
       print(loginData);
+      loginUser();
     });
+  }
+
+  void loginUser() async {
+    Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const MyBottomNavigation()), (fooBar) => false);
+    
   }
 
  
