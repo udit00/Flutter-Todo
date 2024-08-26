@@ -14,6 +14,8 @@ class HomeViewModel extends BaseViewModel with ChangeNotifier {
   List<TodoModel> _generateDummyList() {
     List<TodoModel> dummyList = List.empty(growable: true);
     dummyList.add(TodoModel(id: 1, title: "UDIT", description: "", ));
+    dummyList.add(TodoModel(id: 2, title: "AMIT", description: "", ));
+    dummyList.add(TodoModel(id: 3, title: "GAURAV", description: "", ));
     return dummyList;
   }
 

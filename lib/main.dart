@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_flutter_app/Common/ENV.dart';
 import 'package:todo_flutter_app/Services/Storage/StorageService.dart';
 import 'package:todo_flutter_app/Ui/CommonUi/ScreenDimension.dart';
 import 'package:todo_flutter_app/Ui/Pages/BottomNavigation/MyBottomNavigation.dart';
+import 'package:todo_flutter_app/Ui/Pages/Home/HomeViewModel.dart';
 import 'package:todo_flutter_app/Ui/Pages/Login/LoginViewModel.dart';
 import 'package:todo_flutter_app/Utils/Colors.dart';
 import 'package:todo_flutter_app/Ui/Pages/Login/Login.dart';
@@ -21,7 +21,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => LoginViewModel(),
+          create: (context) => LoginViewModel(),          
+        ),
+        ChangeNotifierProvider(
+          create: (context) => HomeViewModel(),          
         ),
 
       ],
