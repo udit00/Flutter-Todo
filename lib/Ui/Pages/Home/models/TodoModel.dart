@@ -1,40 +1,52 @@
 class TodoModel {
-  int? id;
+  int? todoid;
   String? title;
   String? description;
+  int? userid;
+  String? createdon;
+  int? todotypeid;
+  String? target;
   int? typeid;
   String? typename;
-  String? createdon;
-  String? bgcolor;
+  int? createid;
 
   TodoModel(
-      {this.id,
-      this.title,
-      this.description,
-      this.typeid,
-      this.typename,
-      this.createdon,
-      this.bgcolor});
+      {this.todoid,
+        this.title,
+        this.description,
+        this.userid,
+        this.createdon,
+        this.todotypeid,
+        this.target,
+        this.typeid,
+        this.typename,
+        this.createid});
 
   TodoModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    todoid = json['todoid'];
     title = json['title'];
     description = json['description'];
+    userid = json['userid'];
+    createdon = json['createdon'];
+    todotypeid = json['todotypeid'];
+    target = json['target'];
     typeid = json['typeid'];
     typename = json['typename'];
-    createdon = json['createdon'];
-    bgcolor = json['bgcolor'];
+    createid = json['createid'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    data['todoid'] = this.todoid;
     data['title'] = this.title;
     data['description'] = this.description;
+    data['userid'] = this.userid;
+    data['createdon'] = this.createdon;
+    data['todotypeid'] = this.todotypeid;
+    data['target'] = this.target;
     data['typeid'] = this.typeid;
     data['typename'] = this.typename;
-    data['createdon'] = this.createdon;
-    data['bgcolor'] = this.bgcolor;
+    data['createid'] = this.createid;
     return data;
   }
 }

@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();    
     _homeViewModel = Provider.of(context, listen: false);
     WidgetsBinding.instance.addPersistentFrameCallback((timeStamp) {
-      _homeViewModel?.getTodoList();          
+      _homeViewModel?.getTodoList("");
     });
     
   }
